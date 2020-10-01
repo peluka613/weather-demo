@@ -1,0 +1,10 @@
+edu/weather/WeatherDemoApplication.java
+ edu.weather.WeatherDemoApplication
+edu/weather/model/dto/LocationDto.java
+ edu.weather.model.dto.LocationDto
+edu/weather/model/entities/Location.java
+ edu.weather.model.entities.Location
+edu/weather/model/repository/ILocationRepository.java
+ edu.weather.model.repository.ILocationRepository
+edu/weather/controllers/LocationsController.java
+ edu.weather.controllers.LocationsController
