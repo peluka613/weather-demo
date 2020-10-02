@@ -9,6 +9,7 @@ import edu.weather.utils.WeatherConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,6 +25,13 @@ public class WeatherRecordServiceImpl implements IWeatherRecordService {
     @Override
     public List<WeatherRecordDto> getAll() {
         List<WeatherRecord> weatherRecords = weatherRecodrRepository.findAll();
+        return fetchToDto(weatherRecords);
+    }
+
+    @Override
+    public List<WeatherRecordDto> getAllByDate(String sDate) {
+        Date date = Date.valueOf(sDate);
+        List<WeatherRecord> weatherRecords = weatherRecodrRepository.findAllByDate(date);
         return fetchToDto(weatherRecords);
     }
 

@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -19,8 +20,22 @@ public class WeatherController {
     IWeatherRecordService weatherRecordService;
 
     @GetMapping()
-    public ResponseEntity<List<WeatherRecordDto>> getAll() {
-        List<WeatherRecordDto> weatherRecords = weatherRecordService.getAll();
-        return new ResponseEntity<List<WeatherRecordDto>>(weatherRecords, HttpStatus.OK);
+    public ResponseEntity<List<WeatherRecordDto>> getAllByDate(@RequestParam(required = false) String date) {
+        try {
+            List<WeatherRecordDto> weatherRecords;
+
+            if (date == null) {
+                weatherRecords = weatherRecordService.getAll();
+            } else {
+                weatherRecords = weatherRecordService.getAllByDate(date);
+            }
+
+            if (weatherRecords.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<List<WeatherRecordDto>>(weatherRecords, HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 }
