@@ -7,4 +7,5 @@ import java.util.List;
 public interface IWeatherRecordService {
     List<WeatherRecordDto> getAll();
     List<WeatherRecordDto> getAllByDate(String date);
+    void deleteAll();
 }

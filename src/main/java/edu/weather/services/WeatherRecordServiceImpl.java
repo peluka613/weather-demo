@@ -35,6 +35,12 @@ public class WeatherRecordServiceImpl implements IWeatherRecordService {
         return fetchToDto(weatherRecords);
     }
 
+    @Override
+    public void deleteAll() {
+        temperatureRepository.deleteAll();
+        weatherRecodrRepository.deleteAll();
+    }
+
     private List<WeatherRecordDto> fetchToDto(List<WeatherRecord> weatherRecords) {
         return weatherRecords.stream().map(
                 weater -> WeatherConverter.convertWeatherEntityToDto(weater, getTemperatures(weater))
