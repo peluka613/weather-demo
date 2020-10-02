@@ -1,7 +1,6 @@
 package edu.weather.controllers;
 
-import edu.weather.model.entities.WeatherRecord;
-import edu.weather.model.repository.IWeatherRecordRepository;
+import edu.weather.model.dto.WeatherRecordDto;
 import edu.weather.services.IWeatherRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,8 +19,8 @@ public class WeatherController {
     IWeatherRecordService weatherRecordService;
 
     @GetMapping()
-    public ResponseEntity<List<WeatherRecord>> getAll() {
-        List<WeatherRecord> weatherRecords = weatherRecordService.getAll();
-        return new ResponseEntity<List<WeatherRecord>>(weatherRecords, HttpStatus.OK);
+    public ResponseEntity<List<WeatherRecordDto>> getAll() {
+        List<WeatherRecordDto> weatherRecords = weatherRecordService.getAll();
+        return new ResponseEntity<List<WeatherRecordDto>>(weatherRecords, HttpStatus.OK);
     }
 }
