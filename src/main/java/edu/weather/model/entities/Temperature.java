@@ -21,9 +21,17 @@ public class Temperature {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="weather", referencedColumnName="id")
+    @JoinColumn(name = "weather", referencedColumnName = "id")
     private WeatherRecord weather;
 
     @Column
     private Float temperature;
+
+    public Temperature() {
+    }
+
+    public Temperature(WeatherRecord weather, Float temperature) {
+        this.weather = weather;
+        this.temperature = temperature;
+    }
 }

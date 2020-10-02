@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,6 +19,16 @@ public class WeatherController {
 
     @Autowired
     IWeatherRecordService weatherRecordService;
+
+    @PostMapping("/weather")
+    public ResponseEntity createWeatherRecord(@RequestBody WeatherRecordDto weatherRecordDto) {
+        try {
+            weatherRecordService.save(weatherRecordDto);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<List<WeatherRecordDto>>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<List<WeatherRecordDto>>(HttpStatus.CREATED);
+    }
 
     @GetMapping("/weather")
     public ResponseEntity<List<WeatherRecordDto>> getAllByDate(@RequestParam(required = false) String date) {
