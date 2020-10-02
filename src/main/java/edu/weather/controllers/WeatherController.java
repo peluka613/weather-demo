@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -21,12 +22,8 @@ public class WeatherController {
     IWeatherRecordService weatherRecordService;
 
     @PostMapping("/weather")
-    public ResponseEntity createWeatherRecord(@RequestBody WeatherRecordDto weatherRecordDto) {
-        try {
-            weatherRecordService.save(weatherRecordDto);
-        } catch (IllegalArgumentException e) {
-            return new ResponseEntity<List<WeatherRecordDto>>(HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity createWeatherRecord(@Valid @RequestBody WeatherRecordDto weatherRecordDto) {
+        weatherRecordService.save(weatherRecordDto);
         return new ResponseEntity<List<WeatherRecordDto>>(HttpStatus.CREATED);
     }
 

@@ -31,7 +31,11 @@ public class WeatherRecordServiceImpl implements IWeatherRecordService {
     public void save(WeatherRecordDto weatherRecordDto) {
         Optional<WeatherRecord> verifyWeatherRecord = weatherRecodrRepository.findById(weatherRecordDto.getId());
         if (verifyWeatherRecord.isPresent()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("ID duplicated");
+        }
+
+        if (weatherRecordDto.getTemperature().length > 24) {
+            throw new IllegalArgumentException("More than 24 temperatures");
         }
 
         WeatherRecord weatherRecord = WeatherConverter.convertWeatherDtoToEntity(weatherRecordDto);
