@@ -16,7 +16,11 @@ import java.util.List;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
-public class WeatherConverter {
+public abstract class WeatherConverter {
+
+    private WeatherConverter() throws IllegalAccessException {
+        throw new IllegalAccessException("private constructor");
+    }
 
     public static WeatherRecord convertWeatherDtoToEntity(WeatherRecordDto weatherRecordDto) {
         WeatherRecord weatherRecord = new WeatherRecord();
@@ -59,12 +63,11 @@ public class WeatherConverter {
         NumberFormat formatter = new DecimalFormat("#0.0");
         return temperatures.stream()
                 .map(Temperature::getTemperature)
-                .map(temp -> formatter.format(temp))
+                .map(formatter::format)
                 .collect(Collectors.toList()).toArray(new String[0]);
     }
 
-    private static BiFunction<WeatherRecord, Float, Temperature> createTemperature =
-            (weather, temperature) -> new Temperature(weather, temperature);
+    private static BiFunction<WeatherRecord, Float, Temperature> createTemperature = Temperature::new;
 
     public static List<Temperature> extractTemperatures(WeatherRecord weatherRecord, String[] temps) {
         return Arrays.stream(temps).map(

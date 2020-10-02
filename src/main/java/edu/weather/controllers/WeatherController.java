@@ -22,9 +22,9 @@ public class WeatherController {
     IWeatherRecordService weatherRecordService;
 
     @PostMapping("/weather")
-    public ResponseEntity createWeatherRecord(@Valid @RequestBody WeatherRecordDto weatherRecordDto) {
+    public ResponseEntity<Object> createWeatherRecord(@Valid @RequestBody WeatherRecordDto weatherRecordDto) {
         weatherRecordService.save(weatherRecordDto);
-        return new ResponseEntity<List<WeatherRecordDto>>(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("/weather")
@@ -41,15 +41,15 @@ public class WeatherController {
             if (weatherRecords.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
-            return new ResponseEntity<List<WeatherRecordDto>>(weatherRecords, HttpStatus.OK);
+            return new ResponseEntity<>(weatherRecords, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
     @DeleteMapping("/eliminar")
-    public ResponseEntity deleteAll() {
+    public ResponseEntity<Object> deleteAll() {
         weatherRecordService.deleteAll();
-        return new ResponseEntity<List<WeatherRecordDto>>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
